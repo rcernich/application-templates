@@ -76,11 +76,6 @@
             "generate": "expression"
         },
         {
-            "description": "Protocol to configure.  Only openwire is supported by EAP.  amqp, amqp+ssl, mqtt, stomp, stomp+ssl, and ssl are not supported by EAP",
-            "name": "MQ_PROTOCOL",
-            "value": "openwire"
-        },
-        {
             "description": "Queue names",
             "name": "MQ_QUEUES",
             "value": ""
@@ -511,38 +506,8 @@
                                 "imagePullPolicy": "Always",
                                 "ports": [
                                     {
-                                        "name": "${APPLICATION_NAME}-amq-amqp",
-                                        "containerPort": 5672,
-                                        "protocol": "TCP"
-                                    },
-                                    {
-                                        "name": "${APPLICATION_NAME}-amq-amqp-ssl",
-                                        "containerPort": 5671,
-                                        "protocol": "TCP"
-                                    },
-                                    {
-                                        "name": "${APPLICATION_NAME}-amq-mqtt",
-                                        "containerPort": 1883,
-                                        "protocol": "TCP"
-                                    },
-                                    {
-                                        "name": "${APPLICATION_NAME}-amq-stomp",
-                                        "containerPort": 61613,
-                                        "protocol": "TCP"
-                                    },
-                                    {
-                                        "name": "${APPLICATION_NAME}-amq-stomp-ssl",
-                                        "containerPort": 61612,
-                                        "protocol": "TCP"
-                                    },
-                                    {
                                         "name": "${APPLICATION_NAME}-amq-tcp",
                                         "containerPort": 61616,
-                                        "protocol": "TCP"
-                                    },
-                                    {
-                                        "name": "${APPLICATION_NAME}-amq-tcp-ssl",
-                                        "containerPort": 61617,
                                         "protocol": "TCP"
                                     }
                                 ],
@@ -557,7 +522,7 @@
                                     },
                                     {
                                         "name": "AMQ_PROTOCOLS",
-                                        "value": "${MQ_PROTOCOL}"
+                                        "value": "openwire"
                                     },
                                     {
                                         "name": "AMQ_QUEUES",
