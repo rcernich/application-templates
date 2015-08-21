@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config templateName="eap6-mysql-sti" templateIcon="icon-jboss" xmlns="urn:jboss:cloud-enablement:template-config:1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:jboss:cloud-enablement:template-config:1.0 ../template-config.xsd">
+  <description>
+    Application template for EAP 6 MySQL applications built using STI.
+  </description>
+  <common>
+    <params>
+      <applicationName default="eap-app">APPLICATION_NAME</applicationName>
+      <applicationHostName>APPLICATION_HOSTNAME</applicationHostName>
+      <gitUri default="https://github.com/jboss-developer/jboss-eap-quickstarts">GIT_URI</gitUri>
+      <gitRef default="6.4.x">GIT_REF</gitRef>
+      <gitContextDir default="kitchensink">GIT_CONTEXT_DIR</gitContextDir>
+      <imageStreamNamespace default="openshift">IMAGE_STREAM_NAMESPACE</imageStreamNamespace>
+      <githubTriggerSecret>GITHUB_TRIGGER_SECRET</githubTriggerSecret>
+      <genericTriggerSecret>GENERIC_TRIGGER_SECRET</genericTriggerSecret>
+    </params>
+  </common>
+  <eap name="${APPLICATION_NAME}" imageStreamName="${APPLICATION_NAME}" imageStreamTag="latest"
+    buildImageStreamTag="jboss-eap6-openshift:${EAP_RELEASE}" configureSsl="true" configureHornetQ="true">
+    <db type="mysql" name="${APPLICATION_NAME}-mysql" prefix="DB" imageStreamName="mysql" imageStreamTag="latest"
+      configureAdvancedSettings="true" configurePersistence="false" isExternal="false" />
+  </eap>
+</config>

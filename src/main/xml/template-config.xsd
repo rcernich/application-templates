@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:jboss:cloud-enablement:template-config:1.0"
+  xmlns:tns="urn:jboss:cloud-enablement:template-config:1.0" elementFormDefault="qualified">
+
+  <annotation>
+    <documentation>Schema used to define configuration for template generation. This information is used by the template
+      generator when generating JBoss Cloud Enablement templates for use OpenShift v3.
+    </documentation>
+  </annotation>
+  <element name="config">
+    <annotation>
+      <documentation>Root element for template configuration.</documentation>
+    </annotation>
+    <complexType>
+      <sequence maxOccurs="1" minOccurs="1">
+        <sequence maxOccurs="1" minOccurs="1">
+          <element name="description" type="string">
+            <annotation>
+              <documentation>A description of the template, what it's for, how it should be used, etc.</documentation>
+            </annotation>
+          </element>
+          <element name="common" maxOccurs="1" minOccurs="1">
+            <annotation>
+              <documentation>Common configuration details. These are generally used to configure aspects common to all
+                templates.
+              </documentation>
+            </annotation>
+            <complexType>
+              <sequence>
+                <element name="params">
+                  <annotation>
+                    <documentation>These are used to define the names of common template parameters (e.g.
+                      APPLICATION_NAME).
+                    </documentation>
+                  </annotation>
+                  <complexType>
+                    <all>
+                      <element name="applicationName" type="tns:paramType" maxOccurs="1" minOccurs="1">
+                        <annotation>
+                          <documentation>Template parameter used to specify the application name, e.g. APPLICATION_NAME.
+                          </documentation>
+                        </annotation>
+                      </element>
+                      <element name="applicationHostName" type="tns:paramType" maxOccurs="1" minOccurs="0">
+                        <annotation>
+                          <documentation>Template parameter used to specify the application hostname, e.g.
+                            APPLICATION_HOSTNAME.
+                          </documentation>
+                        </annotation>
+                      </element>
+                      <element name="gitUri" type="tns:paramType" maxOccurs="1" minOccurs="0">
+                        <annotation>
+                          <documentation>Template parameter used to specify the Git URI for the source project, e.g.
+                            GIT_URI.
+                          </documentation>
+                        </annotation>
+                      </element>
+                      <element name="gitRef" type="tns:paramType" maxOccurs="1" minOccurs="0">
+                        <annotation>
+                          <documentation>Template parameter used to specify the Git ref for the source project, e.g.
+                            GIT_REF.
+                          </documentation>
+                        </annotation>
+                      </element>
+                      <element name="gitContextDir" type="tns:paramType" maxOccurs="1" minOccurs="0">
+                        <annotation>
+                          <documentation>Template parameter used to specify the directory that should be used as the
+                            build root within the source project, e.g. GIT_CONTEXT_DIR.
+                          </documentation>
+                        </annotation>
+                      </element>
+                      <element name="imageStreamNamespace" type="tns:paramType" maxOccurs="1" minOccurs="1">
+                        <annotation>
+                          <documentation>Template parameter used to specify the namespace where JBoss Middleware image
+                            streams are installed, e.g. IMAGE_STREAM_NAMESPACE.
+                          </documentation>
+                        </annotation>
+                      </element>
+                      <element name="githubTriggerSecret" type="tns:paramType" maxOccurs="1" minOccurs="0">
+                        <annotation>
+                          <documentation>Template parameter used to specify the GitHub secret for build triggers, e.g.
+                            GITHUB_TRIGGER_SECRET.
+                          </documentation>
+                        </annotation>
+                      </element>
+                      <element name="genericTriggerSecret" type="tns:paramType" maxOccurs="1" minOccurs="0">
+                        <annotation>
+                          <documentation>Template parameter used to specify the generic secret for http build triggers,
+                            e.g. GENERIC_TRIGGER_SECRET.
+                          </documentation>
+                        </annotation>
+                      </element>
+                    </all>
+                  </complexType>
+                </element>
+              </sequence>
+            </complexType>
+          </element>
+        </sequence>
+        <sequence maxOccurs="unbounded">
+          <element name="eap" type="tns:eapType" maxOccurs="1" minOccurs="0">
+            <annotation>
+              <documentation>Specifies details for creating a template which includes an EAP deployment.</documentation>
+            </annotation>
+          </element>
+          <element name="amq" type="tns:amqType" maxOccurs="1" minOccurs="0">
+            <annotation>
+              <documentation>Specifies details for creating a template which includes an A-MQ deployment.
+              </documentation>
+            </annotation>
+          </element>
+          <element name="db" type="tns:dbType" maxOccurs="1" minOccurs="0">
+            <annotation>
+              <documentation>Specifies details for creating a template which includes a database deployment.
+              </documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </sequence>
+      <attribute name="templateName" type="string" use="required">
+        <annotation>
+          <documentation>The name of the template. This must be unique across templates if they are all to be installed
+            within the same OpenShift namespace.
+          </documentation>
+        </annotation>
+      </attribute>
+      <attribute name="templateIcon" type="string">
+        <annotation>
+          <documentation>The name of the icon that should be used when displaying this template, e.g. icon-jboss.
+          </documentation>
+        </annotation>
+      </attribute>
+    </complexType>
+  </element>
+
+  <complexType name="eapType">
+    <sequence maxOccurs="unbounded" minOccurs="0">
+      <element name="amq" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>
+            Specifies an A-MQ deployment that is referenced by the EAP deployment. Depending on
+            <code>isExternal</code>
+            , this has the effect of adding a deployment for A-MQ and configuring EAP to be able to reference the A-MQ
+            instance.
+          </documentation>
+        </annotation>
+        <complexType>
+          <complexContent>
+            <extension base="tns:amqType">
+              <attributeGroup ref="tns:consumableAttrGroup"></attributeGroup>
+            </extension>
+          </complexContent>
+        </complexType>
+      </element>
+      <element name="db" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>
+            Specifies a database deployment that is referenced by the EAP deployment. Depending on
+            <code>isExternal</code>
+            , this has the effect of adding a deployment for the database and configuring EAP to be able to reference
+            the database instance (e.g. adding a datasource).
+          </documentation>
+        </annotation>
+        <complexType>
+          <complexContent>
+            <extension base="tns:dbType">
+              <attributeGroup ref="tns:consumableAttrGroup"></attributeGroup>
+            </extension>
+          </complexContent>
+        </complexType>
+      </element>
+    </sequence>
+    <attributeGroup ref="tns:deployableAttrGroup"></attributeGroup>
+    <attributeGroup ref="tns:buildableAttrGroup"></attributeGroup>
+    <attribute name="configureSsl" type="boolean">
+      <annotation>
+        <documentation>Flag to specify whether or not the template should be configured to support SSL within the
+          deployment. This has the effect of adding a service and route for https, as well as configuring an https
+          connector within EAP.
+        </documentation>
+      </annotation>
+    </attribute>
+    <attribute name="configureHornetQ" type="boolean">
+      <annotation>
+        <documentation>Flag to specify whether or not the template should be configured to support HornetQ within the
+          deployment. This has the effect of configuring HornetQ topics and queues within EAP.
+        </documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <complexType name="amqType">
+    <attributeGroup ref="tns:deployableAttrGroup"></attributeGroup>
+    <attributeGroup ref="tns:prefixAttrGroup"></attributeGroup>
+    <attributeGroup ref="tns:persistableAttrGroup"></attributeGroup>
+    <attribute name="configureSsl" type="boolean">
+      <annotation>
+        <documentation>Flag to specify whether or not the template should be configured to support SSL within the
+          deployment. This has the effect of configuring SSL within A-MQ.
+        </documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <complexType name="dbType">
+    <attributeGroup ref="tns:deployableAttrGroup"></attributeGroup>
+    <attributeGroup ref="tns:prefixAttrGroup"></attributeGroup>
+    <attributeGroup ref="tns:persistableAttrGroup"></attributeGroup>
+    <attribute name="configureAdvancedSettings" type="boolean">
+      <annotation>
+        <documentation>Flag to specify whether or not the template should be configured to support advanced database
+          configuration within the deployment. This has the effect of adding parameters for specifying items like
+          connection pool size and advanced features provided by the database image.
+        </documentation>
+      </annotation>
+    </attribute>
+    <attribute name="type" use="required">
+      <annotation>
+        <documentation>Specifies the type of database to instantiate within the template.</documentation>
+      </annotation>
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="mysql"></enumeration>
+          <enumeration value="mongodb"></enumeration>
+          <enumeration value="postgresql"></enumeration>
+        </restriction>
+      </simpleType>
+    </attribute>
+  </complexType>
+
+  <complexType name="buildType">
+    <all>
+      <element name="buildImageStreamTag" type="string" maxOccurs="1" minOccurs="1"></element>
+    </all>
+  </complexType>
+
+  <attributeGroup name="deployableAttrGroup">
+    <attribute name="name" type="string" use="required">
+      <annotation>
+        <documentation>The name used to represent this deployment and any associated build configuration within the
+          template, e.g. ${APPLICATION_NAME}. All objects related to this deployment will reference this name as well
+          (e.g. a service named application-foo).
+        </documentation>
+      </annotation>
+    </attribute>
+    <attribute name="imageStreamName" type="string" use="required">
+      <annotation>
+        <documentation>The name of the image stream to use for the deployment, e.g. mysql.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="imageStreamTag" type="string" use="required">
+      <annotation>
+        <documentation>The tag for the image stream to use for the deployment, e.g. ${AMQ_RELEASE}</documentation>
+      </annotation>
+    </attribute>
+  </attributeGroup>
+
+  <attributeGroup name="persistableAttrGroup">
+    <attribute name="configurePersistence" type="string">
+      <annotation>
+        <documentation>Flag to specify whether or not the template should be configured to support persistent storage
+          for this deployment. This has the effect of adding a persistent volume claim and a reference to that claim
+          within the pod.
+        </documentation>
+      </annotation>
+    </attribute>
+  </attributeGroup>
+
+  <attributeGroup name="consumableAttrGroup">
+    <attribute name="isExternal" type="string">
+      <annotation>
+        <documentation>
+          This is used to specify whether or not this service is provided by an existing deployment. If this is set to
+          <code>true</code>
+          no deployment will be configured, but the EAP pod will still be configured to access the service.
+        </documentation>
+      </annotation>
+    </attribute>
+  </attributeGroup>
+
+  <attributeGroup name="prefixAttrGroup">
+    <attribute name="prefix" type="string" use="required">
+      <annotation>
+        <documentation>Used to specify the prefix to use for template parameters associated with this deployment. This
+          is also used to configure prefix mappings within the EAP pod.
+        </documentation>
+      </annotation>
+    </attribute>
+  </attributeGroup>
+
+  <attributeGroup name="buildableAttrGroup">
+    <attribute name="buildImageStreamTag" type="string" use="required">
+      <annotation>
+        <documentation>The name and tag of the image stream to use for the STI build, e.g.
+          jboss-eap6-openshift:${EAP_RELEASE}.
+        </documentation>
+      </annotation>
+    </attribute>
+  </attributeGroup>
+
+  <complexType name="paramType">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="default" type="string">
+          <annotation>
+            <documentation>The default value, if any, that should be used for the parameter.</documentation>
+          </annotation></attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+</schema>

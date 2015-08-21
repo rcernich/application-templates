@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config templateName="amq6" templateIcon="icon-jboss" xmlns="urn:jboss:cloud-enablement:template-config:1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:jboss:cloud-enablement:template-config:1.0 ../template-config.xsd">
+  <description>
+    Application template for ActiveMQ brokers.
+  </description>
+  <common>
+    <params>
+      <applicationName default="broker">APPLICATION_NAME</applicationName>
+      <imageStreamNamespace default="openshift">IMAGE_STREAM_NAMESPACE</imageStreamNamespace>
+    </params>
+  </common>
+  <amq name="${APPLICATION_NAME}-amq" prefix="mq" imageStreamName="jboss-amq-6" imageStreamTag="${AMQ_RELEASE}" configureSsl="true"
+    configurePersistence="false" />
+</config>
