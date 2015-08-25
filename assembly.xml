@@ -30,6 +30,12 @@
             <directoryMode>755</directoryMode>
         </fileSet>
         <fileSet>
+            <directory>${project.build.directory}/docs</directory>
+            <outputDirectory>docs</outputDirectory>
+            <fileMode>644</fileMode>
+            <directoryMode>755</directoryMode>
+        </fileSet>
+        <fileSet>
             <fileMode>644</fileMode>
             <directoryMode>755</directoryMode>
             <includes>

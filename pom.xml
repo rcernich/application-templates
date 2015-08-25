@@ -65,12 +65,39 @@
               </target>
             </configuration>
           </execution>
+          <execution>
+            <id>generate-docs</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <scriptdef name="gen-docs" language="jython" src="${basedir}/src/main/docs/gen_template_docs.py"
+                  classpathref="maven.plugin.classpath">
+                  <element name="fileset" type="fileset" />
+                  <attribute name="destDir" />
+                  <attribute name="templateDir" />
+                  <attribute name="extension" />
+                </scriptdef>
+                <gen-docs destdir="${project.build.directory}/docs" templateDir="${basedir}/src/main/docs"
+                  extension="adoc">
+                  <fileset dir="${project.build.directory}/json" includes="**/*.json" />
+                </gen-docs>
+              </target>
+            </configuration>
+          </execution>
         </executions>
         <dependencies>
           <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>${version.freemarker}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.python</groupId>
+            <artifactId>jython-standalone</artifactId>
+            <version>2.7.0</version>
           </dependency>
         </dependencies>
       </plugin>

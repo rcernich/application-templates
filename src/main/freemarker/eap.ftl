@@ -17,7 +17,7 @@ ${service.@name}=${service.@prefix?upper_case}
 </@compress>
 </#macro>
 
-<#macro params common eap>
+<#macro params eap common>
 <@generic.params common true false/>,
         {
             "description": "EAP Release version, e.g. 6.4, etc.",
@@ -80,7 +80,7 @@ ${service.@name}=${service.@prefix?upper_case}
 </#list>
 </#macro>
 
-<#macro objects common eap>
+<#macro objects eap common>
         {
             "kind": "Service",
             "apiVersion": "v1",
