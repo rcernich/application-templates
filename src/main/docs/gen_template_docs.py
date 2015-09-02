@@ -57,8 +57,11 @@ def generate_templates():
                 
                 System.out.println("Writing output: " + outName)
                 #System.out.println(createTemplate(data))
-                with open(outName, "w") as text_file:
-                    text_file.write(createTemplate(data))
+                if not os.path.exists(outName):
+                    with open(outName, "w") as text_file:
+                        text_file.write(createTemplate(data))
+                else:
+                    raise Exception("Output file exists: " + outName)
 
 def createTemplate(data):
     template = string.Template(open(TEMPLATE_DIR+'/template.adoc.in').read())
@@ -198,18 +201,22 @@ fullname = {
 
 def generate_index():
     """Generates an index page for the template documentation."""
-    with open(DEST_DIR+'/index.adoc','w') as fh:
-        # page header
-        fh.write(open(TEMPLATE_DIR+'/index.adoc.in').read())
-
-        for directory in os.listdir(DEST_DIR):
-            if not os.path.isdir(directory):
-                continue
-            # section header
-            fh.write('\n== %s\n\n' % fullname.get(directory, directory))
-            # links
-            for template in [ os.path.splitext(x)[0] for x in  os.listdir(directory) ]:
-                fh.write("* link:./%s/%s.adoc[%s]\n" % (directory, template, template))
+    indexFile = DEST_DIR+'/index.adoc'
+    if not os.path.exists(indexFile):
+        with open(indexFile,'w') as fh:
+            # page header
+            fh.write(open(TEMPLATE_DIR+'/index.adoc.in').read())
+    
+            for directory in os.listdir(DEST_DIR):
+                if not os.path.isdir(directory):
+                    continue
+                # section header
+                fh.write('\n== %s\n\n' % fullname.get(directory, directory))
+                # links
+                for template in [ os.path.splitext(x)[0] for x in  os.listdir(directory) ]:
+                    fh.write("* link:./%s/%s.adoc[%s]\n" % (directory, template, template))
+    else:
+        raise Exception("Output file exists: " + indexFile)
 
 System.out.println("TEMPLATE_DIR: " + TEMPLATE_DIR)
 System.out.println("FILESETS: " + FILESETS.toString())

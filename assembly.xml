@@ -25,7 +25,7 @@
     <fileSets>
         <fileSet>
             <directory>${project.build.directory}/json</directory>
-            <outputDirectory>.</outputDirectory>
+            <outputDirectory>templates</outputDirectory>
             <fileMode>644</fileMode>
             <directoryMode>755</directoryMode>
         </fileSet>
