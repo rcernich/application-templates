@@ -18,16 +18,17 @@
         {
             "description": "The name for the application.",
             "name": "APPLICATION_NAME",
-            "value": "eap-app"
+            "value": "eap-app",
+            "required": true
         },
         {
-            "description": "Custom hostname for http service route.  Leave blank for default hostname, e.g.: <application-name>.<project>.<default-domain-suffix>",
+            "description": "Custom hostname for http service route.  Leave blank for default hostname, e.g.: <application-name>-<project>.<default-domain-suffix>",
             "name": "HOSTNAME_HTTP",
             "value": "",
             "required": false
         },
         {
-            "description": "Custom hostname for https service route.  Leave blank for default hostname, e.g.: <application-name>.<project>.<default-domain-suffix>",
+            "description": "Custom hostname for https service route.  Leave blank for default hostname, e.g.: secure-<application-name>-<project>.<default-domain-suffix>",
             "name": "HOSTNAME_HTTPS",
             "value": "",
             "required": false
@@ -51,18 +52,6 @@
             "required": false
         },
         {
-            "description": "Database JNDI name used by application to resolve the datasource, e.g. java:/jboss/datasources/postgresql",
-            "name": "DB_JNDI",
-            "value": "java:jboss/datasources/TodoListDS",
-            "required": false
-        },
-        {
-            "description": "Database name",
-            "name": "DB_DATABASE",
-            "value": "root",
-            "required": true
-        },
-        {
             "description": "Queue names",
             "name": "HORNETQ_QUEUES",
             "value": "",
@@ -78,7 +67,7 @@
             "description": "The name of the secret containing the keystore file",
             "name": "HTTPS_SECRET",
             "value": "eap-app-secret",
-            "required": false
+            "required": true
         },
         {
             "description": "The name of the keystore file within the secret",
@@ -99,47 +88,8 @@
             "required": false
         },
         {
-            "description": "Sets xa-pool/min-pool-size for the configured datasource.",
-            "name": "DB_MIN_POOL_SIZE",
-            "required": false
-        },
-        {
-            "description": "Sets xa-pool/max-pool-size for the configured datasource.",
-            "name": "DB_MAX_POOL_SIZE",
-            "required": false
-        },
-        {
-            "description": "Sets transaction-isolation for the configured datasource.",
-            "name": "DB_TX_ISOLATION",
-            "required": false
-        },
-        {
-            "description": "The maximum number of client connections allowed. This also sets the maximum number of prepared transactions.",
-            "name": "POSTGRESQL_MAX_CONNECTIONS",
-            "required": false
-        },
-        {
-            "description": "Configures how much memory is dedicated to PostgreSQL for caching data.",
-            "name": "POSTGRESQL_SHARED_BUFFERS",
-            "required": false
-        },
-        {
             "description": "HornetQ cluster admin password",
             "name": "HORNETQ_CLUSTER_PASSWORD",
-            "from": "[a-zA-Z0-9]{8}",
-            "generate": "expression",
-            "required": true
-        },
-        {
-            "description": "Database user name",
-            "name": "DB_USERNAME",
-            "from": "user[a-zA-Z0-9]{3}",
-            "generate": "expression",
-            "required": true
-        },
-        {
-            "description": "Database user password",
-            "name": "DB_PASSWORD",
             "from": "[a-zA-Z0-9]{8}",
             "generate": "expression",
             "required": true
@@ -156,6 +106,12 @@
             "name": "GENERIC_WEBHOOK_SECRET",
             "from": "[a-zA-Z0-9]{8}",
             "generate": "expression",
+            "required": true
+        },
+        {
+            "description": "Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you've installed the ImageStreams in a different namespace/project.",
+            "name": "IMAGE_STREAM_NAMESPACE",
+            "value": "openshift",
             "required": true
         },
         {
@@ -279,12 +235,6 @@
             "name": "SSO_ENABLE_CORS",
             "value": "false",
             "required": false
-        },
-        {
-            "description": "Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you've installed the ImageStreams in a different namespace/project.",
-            "name": "IMAGE_STREAM_NAMESPACE",
-            "value": "openshift",
-            "required": true
         }
    ],
     "objects": [
@@ -414,7 +364,7 @@
                         "from": {
                             "kind": "ImageStreamTag",
                             "namespace": "${IMAGE_STREAM_NAMESPACE}",
-                            "name": "jboss-ssoeap64-openshift:1.3"
+                            "name": "jboss-eap64-openshift:1.3"
                         },
                         "env": [
                             {
@@ -483,6 +433,9 @@
                                 "name": "${APPLICATION_NAME}"
                             }
                         }
+                    },
+                    {
+                        "type": "ConfigChange"
                     }
                 ],
                 "replicas": 1,
@@ -555,6 +508,11 @@
                                         "name": "https",
                                         "containerPort": 8443,
                                         "protocol": "TCP"
+                                    },
+                                    {
+                                        "name": "ping",
+                                        "containerPort": 8888,
+                                        "protocol": "TCP"
                                     }
                                 ],
                                 "env": [
@@ -571,20 +529,24 @@
                                         }
                                     },
                                     {
-                                        "name": "EAP_HTTPS_KEYSTORE_DIR",
+                                        "name": "HTTPS_KEYSTORE_DIR",
                                         "value": "/etc/eap-secret-volume"
                                     },
                                     {
-                                        "name": "EAP_HTTPS_KEYSTORE",
+                                        "name": "HTTPS_KEYSTORE",
                                         "value": "${HTTPS_KEYSTORE}"
                                     },
                                     {
-                                        "name": "EAP_HTTPS_NAME",
+                                        "name": "HTTPS_NAME",
                                         "value": "${HTTPS_NAME}"
                                     },
                                     {
-                                        "name": "EAP_HTTPS_PASSWORD",
+                                        "name": "HTTPS_PASSWORD",
                                         "value": "${HTTPS_PASSWORD}"
+                                    },
+                                    {
+                                        "name": "HORNETQ_CLUSTER_PASSWORD",
+                                        "value": "${HORNETQ_CLUSTER_PASSWORD}"
                                     },
                                     {
                                         "name": "HORNETQ_QUEUES",
@@ -594,11 +556,7 @@
                                         "name": "HORNETQ_TOPICS",
                                         "value": "${HORNETQ_TOPICS}"
                                     },
-				    {
-                                        "name": "HORNETQ_CLUSTER_PASSWORD",
-                                        "value": "${HORNETQ_CLUSTER_PASSWORD}"
-                                    },
-                                    {
+				                    {
                                         "name": "JGROUPS_ENCRYPT_SECRET",
                                         "value": "${JGROUPS_ENCRYPT_SECRET}"
                                     },
