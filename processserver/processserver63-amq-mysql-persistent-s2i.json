@@ -920,6 +920,12 @@
                                 "name": "${APPLICATION_NAME}-amq",
                                 "image": "jboss-amq-62",
                                 "imagePullPolicy": "Always",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/opt/amq/data",
+                                        "name": "${APPLICATION_NAME}-amq-pvol"
+                                    }
+                                ],
                                 "readinessProbe": {
                                     "exec": {
                                         "command": [
@@ -992,9 +998,37 @@
                                         "name": "AMQ_ADMIN_PASSWORD",
                                         "value": "${AMQ_ADMIN_PASSWORD}"
                                     }
+                                ],
+                                "volumes": [
+                                    {
+                                        "name": "${APPLICATION_NAME}-amq-pvol",
+                                        "persistentVolumeClaim": {
+                                            "claimName": "${APPLICATION_NAME}-amq-claim"
+                                        }
+                                    }
                                 ]
                             }
                         ]
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "PersistentVolumeClaim",
+            "metadata": {
+                "name": "${APPLICATION_NAME}-amq-claim",
+                "labels": {
+                    "application": "${APPLICATION_NAME}"
+                }
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "resources": {
+                    "requests": {
+                        "storage": "${VOLUME_CAPACITY}"
                     }
                 }
             }
