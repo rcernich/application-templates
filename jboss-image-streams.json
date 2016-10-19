@@ -26,7 +26,9 @@
                             "supports":"tomcat7:3.0,tomcat:7,java:8,xpaas:1.1",
                             "sampleRepo": "https://github.com/jboss-openshift/openshift-quickstarts.git",
                             "sampleContextDir": "tomcat-websocket-chat",
-                            "version": "1.1"
+                            "version": "1.1",
+                            "product": "jws:3.0",
+                            "technology": "javaweb"
                         }
                     },
                     {
@@ -38,7 +40,10 @@
                             "supports":"tomcat7:3.0,tomcat:7,java:8,xpaas:1.2",
                             "sampleRepo": "https://github.com/jboss-openshift/openshift-quickstarts.git",
                             "sampleContextDir": "tomcat-websocket-chat",
-                            "version": "1.2"
+                            "version": "1.2",
+                            "product": "jws:3.0",
+                            "technology": "javaweb"
+                            
                         }
                     }
                 ]
@@ -62,7 +67,9 @@
                             "supports":"tomcat8:3.0,tomcat:8,java:8,xpaas:1.1",
                             "sampleRepo": "https://github.com/jboss-openshift/openshift-quickstarts.git",
                             "sampleContextDir": "tomcat-websocket-chat",
-                            "version": "1.1"
+                            "version": "1.1",
+                            "product": "jws:3.0",
+                            "technology": "javaweb"
                         }
                     },
                     {
@@ -74,7 +81,9 @@
                             "supports":"tomcat8:3.0,tomcat:8,java:8,xpaas:1.2",
                             "sampleRepo": "https://github.com/jboss-openshift/openshift-quickstarts.git",
                             "sampleContextDir": "tomcat-websocket-chat",
-                            "version": "1.2"
+                            "version": "1.2",
+                            "product": "jws:3.0",
+                            "technology": "javaweb"
                         }
                     }
                 ]
@@ -99,7 +108,9 @@
                             "sampleRepo": "https://github.com/jboss-developer/jboss-eap-quickstarts.git",
                             "sampleContextDir": "kitchensink",
                             "sampleRef": "6.4.x",
-                            "version": "1.1"
+                            "version": "1.1",
+                            "product": "eap:6.4",
+                            "technology": "java:javaee:javaweb"
                         }
                     },
                     {
@@ -112,7 +123,9 @@
                             "sampleRepo": "https://github.com/jboss-developer/jboss-eap-quickstarts.git",
                             "sampleContextDir": "kitchensink",
                             "sampleRef": "6.4.x",
-                            "version": "1.2"
+                            "version": "1.2",
+                            "product": "eap:6.4",
+                            "technology": "java:javaee:javaweb"
                         }
                     },
                     {
@@ -125,7 +138,9 @@
                             "sampleRepo": "https://github.com/jboss-developer/jboss-eap-quickstarts.git",
                             "sampleContextDir": "kitchensink",
                             "sampleRef": "6.4.x",
-                            "version": "1.3"
+                            "version": "1.3",
+                            "product": "eap:6.4",
+                            "technology": "java:javaee:javaweb"
                         }
                     },
                     {
@@ -138,7 +153,9 @@
                             "sampleRepo": "https://github.com/jboss-developer/jboss-eap-quickstarts.git",
                             "sampleContextDir": "kitchensink",
                             "sampleRef": "6.4.x",
-                            "version": "1.4"
+                            "version": "1.4",
+                            "product": "eap:6.4",
+                            "technology": "java:javaee:javaweb"
                         }
                     }
                 ]
@@ -163,7 +180,9 @@
                             "sampleRepo": "https://github.com/jboss-developer/jboss-eap-quickstarts.git",
                             "sampleContextDir": "kitchensink",
                             "sampleRef": "7.0.0.GA",
-                            "version": "1.3"
+                            "version": "1.3",
+                            "product": "eap:7.0",
+                            "technology": "java:javaee:javaweb"
                         }
                     },
                     {
@@ -176,7 +195,9 @@
                             "sampleRepo": "https://github.com/jboss-developer/jboss-eap-quickstarts.git",
                             "sampleContextDir": "kitchensink",
                             "sampleRef": "7.0.0.GA",
-                            "version": "1.4"
+                            "version": "1.4",
+                            "product": "eap:7.0",
+                            "technology": "java:javaee:javaweb"
                         }
                     }
                 ]
@@ -201,7 +222,9 @@
                             "sampleRepo": "https://github.com/jboss-openshift/openshift-quickstarts.git",
                             "sampleContextDir": "decisionserver/hellorules",
                             "sampleRef": "1.2",
-                            "version": "1.2"
+                            "version": "1.2",
+                            "product": "brms:6.2",
+                            "technology": "rules"
                         }
                     }
                 ]
@@ -226,7 +249,9 @@
                             "sampleRepo": "https://github.com/jboss-openshift/openshift-quickstarts.git",
                             "sampleContextDir": "decisionserver/hellorules",
                             "sampleRef": "1.3",
-                            "version": "1.3"
+                            "version": "1.3",
+                            "product": "brms:6.3",
+                            "technology": "rules"
                         }
                     }
                 ]
@@ -251,7 +276,9 @@
                             "sampleRepo": "https://github.com/jboss-openshift/openshift-quickstarts.git",
                             "sampleContextDir": "processserver/library",
                             "sampleRef": "1.3",
-                            "version": "1.3"
+                            "version": "1.3",
+                            "product": "bpms:6.3",
+                            "technology": "process"
                         }
                     }
                 ]
@@ -273,7 +300,9 @@
                             "iconClass": "icon-jboss",
                             "tags": "datagrid,java,jboss,xpaas",
                             "supports":"datagrid:6.5,java:8,xpaas:1.2",
-                            "version": "1.2"
+                            "version": "1.2",
+                            "product": "jdg:6.5",
+                            "technology": "data:caching"
                         }
                     }
                 ]
@@ -295,7 +324,9 @@
                             "iconClass": "icon-jboss",
                             "tags": "datagrid,java,jboss,xpaas",
                             "supports":"datavirt:6.3,java:8,xpaas:1.4",
-                            "version": "1.0"
+                            "version": "1.0",
+                            "product": "jdv:6.3",
+                            "technology": "data:database"
                         }
                     }
                 ]
@@ -317,7 +348,9 @@
                             "iconClass": "icon-jboss",
                             "tags": "messaging,amq,jboss,xpaas",
                             "supports":"amq:6.2,messaging,xpaas:1.1",
-                            "version": "1.1"
+                            "version": "1.1",
+                            "product": "amq:6.2",
+                            "technology": "messaging:jms"
                         }
                     },
                     {
@@ -327,7 +360,9 @@
                             "iconClass": "icon-jboss",
                             "tags": "messaging,amq,jboss,xpaas",
                             "supports":"amq:6.2,messaging,xpaas:1.2",
-                            "version": "1.2"
+                            "version": "1.2",
+                            "product": "amq:6.2",
+                            "technology": "messaging:jms"
                         }
                     },
                     {
@@ -337,7 +372,9 @@
                             "iconClass": "icon-jboss",
                             "tags": "messaging,amq,jboss,xpaas",
                             "supports":"amq:6.2,messaging,xpaas:1.3",
-                            "version": "1.3"
+                            "version": "1.3",
+                            "product": "amq:6.2",
+                            "technology": "messaging:jms"
                         }
                     }
                 ]
@@ -362,7 +399,8 @@
                             "iconClass": "icon-jboss",
                             "tags": "sso,keycloak,redhat",
                             "supports":"sso:7.0,xpaas:1.3",
-                            "version": "1.3"
+                            "version": "1.3",
+                            "product": "rhsso:7.0"
                         }
                     }
                 ]

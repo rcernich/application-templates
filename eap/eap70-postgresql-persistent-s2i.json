@@ -3,6 +3,9 @@
     "apiVersion": "v1",
     "metadata": {
         "annotations": {
+            "product": "eap:7.0",
+            "category": "advanced/database/postgresql",
+            "technology": "java:javaee:javaweb",
             "description": "Application template for EAP 7 PostgreSQL applications with persistent storage built using S2I.",
             "iconClass": "icon-jboss",
             "tags": "eap,postgresql,javaee,java,database,jboss,xpaas",

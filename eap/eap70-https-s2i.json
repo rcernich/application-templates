@@ -3,6 +3,9 @@
     "apiVersion": "v1",
     "metadata": {
         "annotations": {
+            "product": "eap:7.0",
+            "category": "advanced",
+            "technology": "java:javaee:javaweb",
             "iconClass": "icon-jboss",
             "description": "Application template for EAP 7 applications built using S2I.",
             "tags": "eap,javaee,java,jboss,xpaas",
